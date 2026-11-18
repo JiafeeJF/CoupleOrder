@@ -1,0 +1,125 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply bg-cream;
+    /* 始终预留纵向滚动条槽位，避免滚动条出现/消失导致居中内容左右偏移 */
+    scrollbar-gutter: stable;
+  }
+  body {
+    @apply m-0 min-w-0 overflow-x-hidden bg-cream text-cocoa antialiased;
+    /* 与 html 保持一致，杜绝 body 自身滚动条导致的居中抖动 */
+    scrollbar-gutter: stable;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+  input,
+  textarea,
+  select {
+    @apply outline-none;
+  }
+  input:focus,
+  textarea:focus,
+  select:focus {
+    @apply border-coral ring-2 ring-coral/30;
+  }
+  textarea {
+    field-sizing: content;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-xl bg-tangerine px-5 py-3 text-sm font-semibold text-white shadow-soft transition-all hover:bg-rose active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-xl border-2 border-peach bg-white px-5 py-3 text-sm font-semibold text-cocoa transition-all hover:bg-blush active:scale-[0.97];
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-medium text-latte transition-all hover:bg-blush active:scale-[0.97];
+  }
+  .card {
+    @apply rounded-2xl bg-white p-4 shadow-card;
+  }
+  .input-field {
+    @apply w-full rounded-xl border border-peach bg-white px-4 py-3 text-sm text-cocoa placeholder:text-latte/60 transition-colors;
+  }
+  .badge {
+    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
+  }
+}
+
+/* 全站隐藏滚动条（但仍可正常滚动：滚轮 / 触控板 / 触摸滑动均保留）。
+   通过 html、body 以及所有可能的滚动容器一起隐藏，避免出现细滚动条。
+   注意：不要禁用滚动（不用 overflow:hidden），仅在视觉上隐藏。 */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE / 旧版 Edge */
+}
+*::-webkit-scrollbar {
+  display: none; /* Chrome / Safari / Edge */
+  width: 0;
+  height: 0;
+}
+
+/* 兼容类：仍在需要时可用（保持原有 API 不破坏） */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  scrollbar-color: transparent transparent;
+}
+
+/* 跳动的红点（新订单提示） */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+.animate-pulse-dot {
+  animation: pulse-dot 1.5s ease-in-out infinite;
+}
+
+/* 加入购物车的弹跳反馈 */
+@keyframes pop {
+  0% { transform: scale(0.5); }
+  60% { transform: scale(1.18); }
+  100% { transform: scale(1); }
+}
+.animate-pop {
+  animation: pop 0.28s ease-out;
+}
+
+/* 底部购物车面板上滑 */
+@keyframes sheet-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-sheet-up {
+  animation: sheet-up 0.25s ease-out;
+}
+
+/* 遮罩淡入 */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.animate-fade-in {
+  animation: fade-in 0.2s ease-out;
+}

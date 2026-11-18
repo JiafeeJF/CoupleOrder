@@ -1,0 +1,21 @@
+// Android 国内依赖镜像。通过 --init-script 加载，避免 Capacitor 同步覆盖配置。
+def configureChinaRepositories = { repositories ->
+    repositories.maven { url 'https://maven.aliyun.com/repository/google' }
+    repositories.maven { url 'https://maven.aliyun.com/repository/public' }
+    repositories.maven { url 'https://maven.aliyun.com/repository/central' }
+    repositories.maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+
+    // 国内镜像缺少个别新版本时回退官方仓库，保证构建完整性。
+    repositories.google()
+    repositories.mavenCentral()
+    repositories.gradlePluginPortal()
+}
+
+settingsEvaluated { settings ->
+    configureChinaRepositories(settings.pluginManagement.repositories)
+}
+
+allprojects {
+    configureChinaRepositories(buildscript.repositories)
+    configureChinaRepositories(repositories)
+}

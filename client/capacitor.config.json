@@ -1,0 +1,11 @@
+{
+  "appId": "com.coupleorder.app",
+  "appName": "CoupleOrder",
+  "webDir": "dist",
+  "android": {
+    "backgroundColor": "#fffaf7"
+  },
+  "server": {
+    "androidScheme": "https"
+  }
+}
